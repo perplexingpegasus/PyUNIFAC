@@ -48,8 +48,6 @@ class Compound():
 
 
 
-
-
 class Mixture():
     def __init__(self, compounds, temp):
         self.tempC = temp
@@ -89,14 +87,24 @@ class VLE(Mixture):
         super().__init__(compounds, temp)
         self.pressure = self.pressure_calc()
 
-    def get_ys(self):
-        ys = []
+    def __str__(self):
+        string = 'Pressure: {} mmHg, Temperature {} C' \
+                 '\n-------------------------------------------------------' \
+                 '\n'.format(self.pressure, self.tempC)
+        count = 1
         for compound in self.compounds:
-            y = compound.y(self.pressure, self.tempC)
-            ys += y
-            print('y_{}: {}'.format(compound.name, y))
-        return ys
-
+            string += '{}) {} - \n' \
+                      'P_sat: {} mmHg, x: {}, y: {}, gamma: {}' \
+                      '\n\n'.format(
+                count,
+                compound.name,
+                compound.p_sat(self.tempC),
+                compound.x,
+                compound.y(self.pressure, self.tempC),
+                compound.gamma
+                )
+            count += 1
+        return string
 
     def set_temperature(self, value):
         self.tempC = value
@@ -122,7 +130,6 @@ class VLE(Mixture):
                 for compound in self.compounds
             ]
         )
-
 
 
 class LLE(Mixture):

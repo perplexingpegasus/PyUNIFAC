@@ -28,19 +28,19 @@ water = mixture.Compound(
 
 benzene = mixture.Compound(
     'Benzene',
-    0.3333333333,
+    0.5,
     (6.87987, 1196.76, 219.161),
     {'ACH': 6}
 )
 
 hexane = mixture.Compound(
     'Hexane',
-    0.333333333333333,
+    0.5,
     (6.91058, 1189.64, 226.28),
     {'CH3': 2, 'CH2': 4}
 )
 
-mix = mixture.VLE([water, benzene, hexane], 25)
-
+mix = mixture.VLE([benzene, hexane], 18.85)
 mix.set_temperature(18.85)
-mix.get_ys()
+
+print(mix)
